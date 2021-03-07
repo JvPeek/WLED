@@ -184,9 +184,9 @@ bool updateVal(const String* req, const char* key, byte* val, byte minv=0, byte 
 
 //twitch.cpp
 //somehow arduino craps itself when i include those functions here.
-//void handleTwitch() {}
-//void initTwitch() {}
-//void twitchBeforeDraw() {}
+void handleTwitch();
+void initTwitch();
+void twitchBeforeDraw();
 
 //udp.cpp
 void notify(byte callMode, bool followUp=false);
