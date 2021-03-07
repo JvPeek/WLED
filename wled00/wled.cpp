@@ -3,8 +3,8 @@
 #include <Arduino.h>
 
 /*
- * Main WLED class implementation. Mostly initialization and connection logic
- */
+   Main WLED class implementation. Mostly initialization and connection logic
+*/
 
 WLED::WLED()
 {
@@ -25,32 +25,32 @@ ethernet_settings ethernetBoards[] = {
   // None
   {
   },
-  
+
   // WT32-EHT01
   // Please note, from my testing only these pins work for LED outputs:
   //   IO2, IO4, IO12, IO14, IO15
   // These pins do not appear to work from my testing:
   //   IO35, IO36, IO39
   {
-    1,                 // eth_address, 
-    16,                // eth_power, 
-    23,                // eth_mdc, 
-    18,                // eth_mdio, 
+    1,                 // eth_address,
+    16,                // eth_power,
+    23,                // eth_mdc,
+    18,                // eth_mdio,
     ETH_PHY_LAN8720,   // eth_type,
     ETH_CLOCK_GPIO0_IN // eth_clk_mode
   },
 
   // ESP32-POE
   {
-     0,                  // eth_address, 
-    12,                  // eth_power, 
-    23,                  // eth_mdc, 
-    18,                  // eth_mdio, 
+    0,                  // eth_address,
+    12,                  // eth_power,
+    23,                  // eth_mdc,
+    18,                  // eth_mdio,
     ETH_PHY_LAN8720,     // eth_type,
     ETH_CLOCK_GPIO17_OUT // eth_clk_mode
   },
 
-   // WESP32
+  // WESP32
   {
     0,			              // eth_address,
     -1,			              // eth_power,
@@ -67,9 +67,9 @@ ethernet_settings ethernetBoards[] = {
 void WLED::reset()
 {
   briT = 0;
-  #ifdef WLED_ENABLE_WEBSOCKETS
+#ifdef WLED_ENABLE_WEBSOCKETS
   ws.closeAll(1012);
-  #endif
+#endif
   long dly = millis();
   while (millis() - dly < 450) {
     yield();        // enough time to send response to client
@@ -109,18 +109,18 @@ void prepareHostname(char* hostname)
       hostname[pos] = '-';
       pos++;
     }
-      // else do nothing - no leading hyphens and do not include hyphens for all other characters.
-      pC++;
+    // else do nothing - no leading hyphens and do not include hyphens for all other characters.
+    pC++;
+  }
+  // if the hostname is left blank, use the mac address/default mdns name
+  if (pos < 6) {
+    sprintf(hostname + 5, "%*s", 6, escapedMac.c_str() + 6);
+  } else { //last character must not be hyphen
+    while (pos > 0 && hostname[pos - 1] == '-') {
+      hostname[pos - 1] = 0;
+      pos--;
     }
-    // if the hostname is left blank, use the mac address/default mdns name
-    if (pos < 6) {
-      sprintf(hostname + 5, "%*s", 6, escapedMac.c_str() + 6);
-    } else { //last character must not be hyphen
-      while (pos > 0 && hostname[pos -1] == '-') {
-        hostname[pos -1] = 0;
-        pos--;
-      }
-    }
+  }
 }
 
 //handle Ethernet connection event
@@ -168,6 +168,9 @@ void WLED::loop()
 #ifdef WLED_ENABLE_DMX
   handleDMX();
 #endif
+#ifdef WLED_ENABLE_TWITCH
+  handleTwitch();
+#endif
   userLoop();
   usermods.loop();
 
@@ -208,7 +211,7 @@ void WLED::loop()
     /*if (presetToApply) {
       applyPreset(presetToApply);
       presetToApply = 0;
-    }*/
+      }*/
 
     yield();
 
@@ -231,7 +234,7 @@ void WLED::loop()
   handleWs();
   handleStatusLED();
 
-// DEBUG serial logging
+  // DEBUG serial logging
 #ifdef WLED_DEBUG
   if (millis() - debugTime > 9999) {
     DEBUG_PRINTLN("---DEBUG INFO---");
@@ -349,6 +352,9 @@ void WLED::setup()
 #ifdef WLED_ENABLE_DMX
   initDMX();
 #endif
+#ifdef WLED_ENABLE_TWITCH
+  initTwitch();
+#endif
   // HTTP server page init
   initServer();
 }
@@ -356,12 +362,12 @@ void WLED::setup()
 void WLED::beginStrip()
 {
   // Initialize NeoPixel Strip and button
-  #ifdef ESP8266
-  #if LEDPIN == 3
-    if (ledCount > MAX_LEDS_DMA)
-      ledCount = MAX_LEDS_DMA;        // DMA method uses too much ram
-  #endif
-  #endif
+#ifdef ESP8266
+#if LEDPIN == 3
+  if (ledCount > MAX_LEDS_DMA)
+    ledCount = MAX_LEDS_DMA;        // DMA method uses too much ram
+#endif
+#endif
 
   if (ledCount > MAX_LEDS || ledCount == 0)
     ledCount = 30;
@@ -384,7 +390,7 @@ void WLED::beginStrip()
   }
   colorUpdated(NOTIFIER_CALL_MODE_INIT);
 
-// init relay pin
+  // init relay pin
 #if RLYPIN >= 0
   pinManager.allocatePin(RLYPIN);
   pinMode(RLYPIN, OUTPUT);
@@ -432,7 +438,7 @@ void WLED::initAP(bool resetAP)
       udp2Connected = notifier2Udp.begin(udpPort2);
     }
     e131.begin(false, e131Port, e131Universe, E131_MAX_UNIVERSE_COUNT);
-  
+
     dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
     dnsServer.start(53, "*", WiFi.softAPIP());
   }
@@ -441,19 +447,19 @@ void WLED::initAP(bool resetAP)
 
 void WLED::initConnection()
 {
-  #ifdef WLED_ENABLE_WEBSOCKETS
+#ifdef WLED_ENABLE_WEBSOCKETS
   ws.onEvent(wsEvent);
-  #endif
+#endif
 
 #if defined(ARDUINO_ARCH_ESP32) && defined(WLED_USE_ETHERNET)
   // Only initialize ethernet board if not NONE
   if (ethernetType != WLED_ETH_NONE) {
     ethernet_settings es = ethernetBoards[ethernetType];
     ETH.begin(
-      (uint8_t) es.eth_address, 
-      (int)     es.eth_power, 
-      (int)     es.eth_mdc, 
-      (int)     es.eth_mdio, 
+      (uint8_t) es.eth_address,
+      (int)     es.eth_power,
+      (int)     es.eth_mdc,
+      (int)     es.eth_mdio,
       (eth_phy_type_t)   es.eth_type,
       (eth_clock_mode_t) es.eth_clk_mode
     );
@@ -496,7 +502,7 @@ void WLED::initConnection()
   // convert the "serverDescription" into a valid DNS hostname (alphanumeric)
   char hostname[25] = "wled-";
   prepareHostname(hostname);
-  
+
 #ifdef ESP8266
   WiFi.hostname(hostname);
 #endif
@@ -533,12 +539,12 @@ void WLED::initInterfaces()
   strip.service();
   // Set up mDNS responder:
   if (strlen(cmDNS) > 0) {
-  #ifndef WLED_DISABLE_OTA
+#ifndef WLED_DISABLE_OTA
     if (!aOtaEnabled) //ArduinoOTA begins mDNS for us if enabled
       MDNS.begin(cmDNS);
-  #else
+#else
     MDNS.begin(cmDNS);
-  #endif
+#endif
 
     DEBUG_PRINTLN(F("mDNS started"));
     MDNS.addService("http", "tcp", 80);
@@ -647,23 +653,23 @@ void WLED::handleConnection()
 
 void WLED::handleStatusLED()
 {
-  #if STATUSLED && STATUSLED != LEDPIN
+#if STATUSLED && STATUSLED != LEDPIN
   ledStatusType = WLED_CONNECTED ? 0 : 2;
   if (mqttEnabled && ledStatusType != 2) // Wi-Fi takes presendence over MQTT
     ledStatusType = WLED_MQTT_CONNECTED ? 0 : 4;
   if (ledStatusType) {
-    if (millis() - ledStatusLastMillis >= (1000/ledStatusType)) {
+    if (millis() - ledStatusLastMillis >= (1000 / ledStatusType)) {
       ledStatusLastMillis = millis();
       ledStatusState = ledStatusState ? 0 : 1;
       digitalWrite(STATUSLED, ledStatusState);
     }
   } else {
-    #ifdef STATUSLEDINVERTED
-      digitalWrite(STATUSLED, HIGH);
-    #else
-      digitalWrite(STATUSLED, LOW);
-    #endif
-    
+#ifdef STATUSLEDINVERTED
+    digitalWrite(STATUSLED, HIGH);
+#else
+    digitalWrite(STATUSLED, LOW);
+#endif
+
   }
-  #endif
+#endif
 }

@@ -1,0 +1,10 @@
+// The name of the channel that you want the bot to join
+// for example: "jvpeek"
+const String twitchChannelName = "";
+ 
+// The name that you want the bot to have
+#define TWITCH_BOT_NAME ""
+ 
+//OAuth Key for your twitch bot
+// https://twitchapps.com/tmi/
+#define TWITCH_OAUTH_TOKEN "oauth:"

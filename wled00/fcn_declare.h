@@ -182,6 +182,12 @@ bool handleSet(AsyncWebServerRequest *request, const String& req, bool apply=tru
 int getNumVal(const String* req, uint16_t pos);
 bool updateVal(const String* req, const char* key, byte* val, byte minv=0, byte maxv=255);
 
+//twitch.cpp
+//somehow arduino craps itself when i include those functions here.
+//void handleTwitch() {}
+//void initTwitch() {}
+//void twitchBeforeDraw() {}
+
 //udp.cpp
 void notify(byte callMode, bool followUp=false);
 void realtimeLock(uint32_t timeoutMs, byte md = REALTIME_MODE_GENERIC);

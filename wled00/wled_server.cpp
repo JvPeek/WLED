@@ -319,6 +319,13 @@ String settingsProcessor(const String& var)
   }
   
   #endif
+  #ifdef WLED_ENABLE_TWITCH
+
+  if (var == "TWITCHMENU") {
+    return String(F("<form action=/settings/twitch><button type=submit>Twitch Settings</button></form>"));
+  }
+  
+  #endif
   if (var == "SCSS") return String(FPSTR(PAGE_settingsCss));
   return String();
 }
