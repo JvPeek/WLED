@@ -285,12 +285,11 @@ const char PAGE_settings_dmx[] PROGMEM = R"=====()=====";
       filter: "html-minify",
       mangle: (str) => {
         const nocss = str
-          .replace(/\<link rel="stylesheet".*\>/gms, "")
-          .replace(/\<style\>.*\<\/style\>/gms, "%CSS%%SCSS%")
-          .replace(
-            /function GetV().*\<\/script\>/gms,
-            "function GetV() {var d=document;\n"
+	.replace(
+          /function GetV().*\<\/script\>/gms,
+          "function GetV() {var d=document;\n"
           );
+
         return `
 #ifdef WLED_ENABLE_TWITCH
 ${nocss}
