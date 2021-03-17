@@ -276,6 +276,30 @@ const char PAGE_settings_dmx[] PROGMEM = R"=====()=====";
       },
     },
     {
+      file: "settings_twitch.htm",
+      name: "PAGE_settings_twitch",
+      prepend: "=====(",
+      append: ")=====",
+      method: "plaintext",
+      filter: "html-minify",
+      mangle: (str) => {
+        const nocss = str
+          .replace(/\<link rel="stylesheet".*\>/gms, "")
+          .replace(/\<style\>.*\<\/style\>/gms, "%CSS%%SCSS%")
+          .replace(
+            /function GetV().*\<\/script\>/gms,
+            "function GetV() {var d=document;\n"
+          );
+        return `
+#ifdef WLED_ENABLE_TWITCH
+${nocss}
+#else
+const char PAGE_settings_twitch[] PROGMEM = R"=====()=====";
+#endif
+`;
+      },
+    },
+    {
       file: "settings_ui.htm",
       name: "PAGE_settings_ui",
       prepend: "=====(",
