@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta name="viewport" content="width=500"><meta charset="utf-8"><title>Twitch Settings</title>
+<script>
+function GEV(num) {
+  d=document;
+  let output = "<h3>Events</h3><table><input type=\"hidden\" name=\"EVN\" value=\"" + num + "\" />";
+
+  output += "<tr><th></th><th>Message</th><th>Macro</th><th>any</th><th>bot</th><th>you</th><th>mods</th><th>vips</th><th>subs</th><th>Time</th></tr>";
+  for (i=0;i<num;i++) {
+    output += "<tr><td><input type=\"checkbox\" name=\"EN" + (i+1) + "\" /></td>";
+    output += "<td><input type=\"text\" placeholder=\"Hello!\" size=10 name=\"MSG" + (i+1) + "\"/></td>";
+    output += "<td><input type=\"text\" placeholder=\"&PL=" + (i+1) + "\" size=10 name=\"M" + (i+1) + "\"/></td>";
+    output += "<td><input type=\"checkbox\" name=\"ANY" + (i+1) + "\" /></td>";
+    output += "<td><input type=\"checkbox\" name=\"BOT" + (i+1) + "\" /></td>";
+    output += "<td><input type=\"checkbox\" name=\"USR" + (i+1) + "\" /></td>";
+    output += "<td><input type=\"checkbox\" name=\"MOD" + (i+1) + "\" /></td>";
+    output += "<td><input type=\"checkbox\" name=\"VIP" + (i+1) + "\" /></td>";
+    output += "<td><input type=\"checkbox\" name=\"SUB" + (i+1) + "\" /></td>";
+    output += "<td><input style=\"text-align: center;\" type=\"text\" placeholder=\"10\" size=1 name=\"TM" + (i+1) + "\"/> s</td></tr>";
+  }
+  output += "</table>";
+  d.getElementById('events').innerHTML = output;
+}
+
+function BNList(num) {
+  d=document;
+  let Nnum = d.getElementById("NL").value;
+  let output = "</th><th>#</th><th>Username</th><th>LEDs</th></tr>";
+  for (i=0;i<num;i++) {
+    output += "<tr><td>" + (i+1) + "</td>";
+    output += "<td><input type=\"text\" size=25 maxlength=25 name=\"MSG" + (i+1) + "\"/></td>";
+
+    output += "<td>" + ((i*Nnum)+1) + " - " + ((i+1)*Nnum) + "</td>";
+    output += "</tr>"
+  }
+  d.getElementById('Nlist').innerHTML = output;
+}
+
+function S(){GEV(15);BNList(10);GetV();}function H(){window.open("https://github.com/Aircoookie/WLED/wiki/Twitch");}function B(){window.history.back();}
+function GetV(){}
+</script>
+<style>
+	@import url("style.css");
+  table {
+    margin: auto;
+  }
+  td {
+    padding: 0px 10px;
+  }
+  .segment {
+    width: auto;
+    margin: 10px auto;
+    display: inline-block;
+    border: 1px solid #666;
+  }
+</style>
+</head>
+<body onload="S()">
+<form id="form_s" name="Sf" method="post">
+<div class="helpB"><button type="button" onclick="H()">?</button></div>
+<button type="button" onclick="B()">Back</button><button type="submit">Save</button><hr>
+<h2>Let there be POGGERS</h2>
+
+
+<div class="segment" id="basic">
+
+  <h3>Basic configuration</h3>
+  <table>
+    <tr>
+      <td><label for="CN">Channel name: </label></td>
+      <td><input name="CN" id="CN" type="text"></td>
+    </tr>
+    <tr>
+      <td><label for="CU">Your name: </label></td>
+      <td><input name="CU" id="CU" type="text"></td>
+    </tr>
+    <tr>
+      <td><label for="CB">Alert name: </label></td>
+      <td><input name="CB" id="CB" type="text" placeholder="i. e. Streamelements"></td>
+    </tr>
+    <tr>
+      <td><label for="CO">OAuth Token: </label></td>
+      <td><input name="CO" id="CO" type="password"></td>
+    </tr>
+    <tr>
+      <td><label for="CD">Default preset: </label></td>
+      <td><input name="CD" id="CD" type="number" size="1" min=1 max=16></td>
+    </tr>
+    <tr>
+      <td colspan="2">[ <a href="https://twitchapps.com/tmi/" target="_blank">grab a token here</a> ]<br />
+      <b>Warning: never show your token on stream or give it to anyone</b><br /></td>
+    </tr>
+
+  </table>
+</div><br />
+<div id="events" class="segment">&nbsp;</div><br />
+
+
+<div id="activity" class="segment">
+  <h3>Chat activity</h3>
+  <table>
+    <tr>
+      <td><label for="AL">low activity: </label></td>
+      <td><input name="AL" id="AL" type="range" min="0" max="100"></td>
+      <td><span id="ALV">1</span></td>
+    </tr>
+    <tr>
+      <td><label for="AH">high activity: </label></td>
+      <td><input name="AH" id="AH" type="range" min="0" max="100"></td>
+      <td><span id="ALH">90</span></td>
+    </tr>
+    <tr><td colspan=3><i>messages per minute</i></td></tr>
+  </table>
+  <table>
+    <tr>
+      <th></th>
+      <th>low</th>
+      <th>high</th>
+    </tr>
+    <tr>
+      <td>Color 1:</td>
+      <td><input type="color" name="A2FR" /></td>
+      <td><input type="color" name="A2TO" /></td>
+    </tr>
+    <tr>
+      <td>Color 2:</td>
+      <td><input type="color" name="A2FR" /></td>
+      <td><input type="color" name="A2TO" /></td>
+    </tr>
+    <tr>
+      <td>Color 3:</td>
+      <td><input type="color" name="A3FR" /></td>
+      <td><input type="color" name="A3TO" /></td>
+    </tr>
+    <tr>
+      <td>Get current:</td>
+      <td><input type="button" value="GET" /></td>
+      <td><input type="button" value="GET" /></td>
+    </tr>
+  </table>
+</div><br />
+
+
+<div id="names" class="segment">
+  <h3>Username segments</h3>
+  this lets you highlight certain segments of<br />
+  the LEDs based on per-user activity in chat.
+  <table>
+    <tr>
+      <td><label for="NL">LEDs per user</label></td>
+      <td><input name="NL" id="NL" type="number" value="9" size=1></td>
+    </tr>
+    <tr>
+      <td><label for="NN">Number of users</label></td>
+      <td><input name="NN" id="NN" type="number" size=1></td>
+    </tr>
+    <tr>
+      <td><label for="NT">Fade time (seconds)</label></td>
+      <td><input name="NT" id="NT" type="number" size=1></td>
+    </tr>
+    <tr>
+      <td><label for="NC">Highlight color</label></td>
+      <td><input name="NC" id="NC" type="color" /></td>
+    </tr>
+  </table>
+  <table id="Nlist">
+
+  </table>
+<hr><button type="button" onclick="B()">Back</button><button type="submit">Save</button>
+</form>
+</body>
+</html>
