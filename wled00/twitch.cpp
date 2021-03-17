@@ -14,14 +14,10 @@ const String botName = "STREAMELEMENTS";
 #define defaultPreset   16
 #define eventNum        6
 const uint8_t eventTime[] = {10, 10, 10, 30, 20, 20};
-const String eventMessage[] = {
-  "Folgen",
-  "rausgehauen",
-  "Mitten auf den",
-  "jetzt den Laden hier",
-  "EINER VON UNS! EINER VON UNS!",
-  "Monaten dabei und immer noch nicht gelangweilt.",
-};
+
+  
+  //"Monaten dabei und immer noch nicht gelangweilt.",
+
 
 
 uint8_t twitchNamewallTimeout = 15;
@@ -133,6 +129,13 @@ void handleTwitch() {
 
 void initTwitch() {
   client.setCallback(twitchCallback);
+  //TODO: remove hard coded values
+  strcpy(eventMessage[0], "Folgen");
+  strcpy(eventMessage[1], "rausgehauen");
+  strcpy(eventMessage[2], "Mitten auf den");
+  strcpy(eventMessage[3], "jetzt den Laden hier");
+  strcpy(eventMessage[4], "EINER VON UNS! EINER VON UNS!");
+  
 }
 
 #else
