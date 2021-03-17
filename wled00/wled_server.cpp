@@ -350,7 +350,6 @@ String dmxProcessor(const String& var)
   return mapJS;
 }
 
-
 void serveSettings(AsyncWebServerRequest* request, bool post)
 {
   byte subPage = 0;
@@ -365,6 +364,9 @@ void serveSettings(AsyncWebServerRequest* request, bool post)
     else if (url.indexOf("sec")  > 0) subPage = 6;
     #ifdef WLED_ENABLE_DMX // include only if DMX is enabled
     else if (url.indexOf("dmx")  > 0) subPage = 7;
+    #endif
+    #ifdef WLED_ENABLE_TWITCH // include only if Twitch is enabled
+    else if (url.indexOf("twitch")  > 0) subPage = 8;
     #endif
   } else subPage = 255; //welcome page
 
@@ -387,6 +389,7 @@ void serveSettings(AsyncWebServerRequest* request, bool post)
       case 5: strcpy_P(s, PSTR("Time")); break;
       case 6: strcpy_P(s, PSTR("Security")); strcpy_P(s2, PSTR("Rebooting, please wait ~10 seconds...")); break;
       case 7: strcpy_P(s, PSTR("DMX")); break;
+      case 8: strcpy_P(s, PSTR("Twitch")); break;
     }
 
     strcat_P(s, PSTR(" settings saved."));
@@ -413,6 +416,7 @@ void serveSettings(AsyncWebServerRequest* request, bool post)
     case 5:   request->send_P(200, "text/html", PAGE_settings_time, settingsProcessor); break;
     case 6:   request->send_P(200, "text/html", PAGE_settings_sec , settingsProcessor); break;
     case 7:   request->send_P(200, "text/html", PAGE_settings_dmx , settingsProcessor); break;
+    case 8:   request->send_P(200, "text/html", PAGE_settings_twitch , settingsProcessor); break;
     case 255: request->send_P(200, "text/html", PAGE_welcome); break;
     default:  request->send_P(200, "text/html", PAGE_settings     , settingsProcessor); 
   }
