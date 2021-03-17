@@ -28,7 +28,7 @@ function BNList(num) {
   let output = "</th><th>#</th><th>Username</th><th>LEDs</th></tr>";
   for (i=0;i<num;i++) {
     output += "<tr><td>" + (i+1) + "</td>";
-    output += "<td><input type=\"text\" size=25 maxlength=25 name=\"MSG" + (i+1) + "\"/></td>";
+    output += "<td><input type=\"text\" size=25 maxlength=25 name=\"USR" + (i+1) + "\"/></td>";
 
     output += "<td>" + ((i*Nnum)+1) + " - " + ((i+1)*Nnum) + "</td>";
     output += "</tr>"
@@ -39,8 +39,20 @@ function BNList(num) {
 function S(){GEV(15);BNList(10);GetV();}function H(){window.open("https://github.com/Aircoookie/WLED/wiki/Twitch");}function B(){window.history.back();}
 function GetV(){}
 </script>
-<style>
-	@import url("style.css");
+%CSS%%SCSS%
+<style type="text/css">
+  table {
+    margin: auto;
+  }
+  td {
+    padding: 0px 10px;
+  }
+  .segment {
+    width: auto;
+    margin: 10px auto;
+    display: inline-block;
+    border: 1px solid #666;
+  }
 </style>
 </head>
 <body onload="S()">
@@ -50,7 +62,7 @@ function GetV(){}
 <h2>Let there be POGGERS</h2>
 
 
-<div class="segment" id="basic">
+<span class="segment" id="basic">
 
   <h3>Basic configuration</h3>
   <table>
@@ -80,11 +92,11 @@ function GetV(){}
     </tr>
 
   </table>
-</div><br />
-<div id="events" class="segment">&nbsp;</div><br />
+</span><br />
+<span id="events" class="segment">&nbsp;</span><br />
 
 
-<div id="activity" class="segment">
+<span id="activity" class="segment">
   <h3>Chat activity</h3>
   <table>
     <tr>
@@ -126,10 +138,10 @@ function GetV(){}
       <td><input type="button" value="GET" /></td>
     </tr>
   </table>
-</div><br />
+</span><br />
 
 
-<div id="names" class="segment">
+<span id="names" class="segment">
   <h3>Username segments</h3>
   this lets you highlight certain segments of<br />
   the LEDs based on per-user activity in chat.
@@ -154,6 +166,7 @@ function GetV(){}
   <table id="Nlist">
 
   </table>
+</span>
 <hr><button type="button" onclick="B()">Back</button><button type="submit">Save</button>
 </form>
 </body>
