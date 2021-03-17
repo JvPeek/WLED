@@ -179,13 +179,13 @@ void sappends(char stype, const char* key, char* val)
 //get values for settings form in javascript
 void getSettingsJS(byte subPage, char* dest)
 {
-  //0: menu 1: wifi 2: leds 3: ui 4: sync 5: time 6: sec
+  //0: menu 1: wifi 2: leds 3: ui 4: sync 5: time 6: sec 7: dmx 8: twitch
   DEBUG_PRINT(F("settings resp"));
   DEBUG_PRINTLN(subPage);
   obuf = dest;
   olen = 0;
 
-  if (subPage <1 || subPage >7) return;
+  if (subPage <1 || subPage >8) return;
 
   if (subPage == 1) {
     sappends('s',SET_F("CS"),clientSSID);
@@ -460,6 +460,19 @@ void getSettingsJS(byte subPage, char* dest)
     sappend('i',SET_F("CH14"),DMXFixtureMap[13]);
     sappend('i',SET_F("CH15"),DMXFixtureMap[14]);
     }
+  #endif
+  #ifdef WLED_ENABLE_TWITCH // include only if Twitch is enabled
+  if (subPage == 8)
+  {
+    //TODO: output variables for twitch support. for realsies
+    
+    sappends('s',SET_F("MSG1"),eventMessage[0]);
+    sappends('s',SET_F("MSG2"),eventMessage[1]);
+    sappends('s',SET_F("MSG3"),eventMessage[2]);
+    sappends('s',SET_F("MSG4"),eventMessage[3]);
+    sappends('s',SET_F("MSG5"),eventMessage[4]);
+    
+  }
   #endif
   oappend(SET_F("}</script>"));
 }
