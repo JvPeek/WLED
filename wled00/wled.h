@@ -341,6 +341,12 @@ WLED_GLOBAL uint16_t userVar0 _INIT(0), userVar1 _INIT(0); //available for use i
   WLED_GLOBAL uint16_t DMXStartLED _INIT(0);      // LED from which DMX fixtures start
 #endif
 
+#ifdef WLED_ENABLE_TWITCH
+  WLED_GLOBAL char eventMessage[5][32] _INIT_N(({ "1", "2", "3", "4", "5" }));
+  //TODO: Add all the twitch variables
+  //WLED_GLOBAL String
+
+#endif
 // internal global variable declarations
 // wifi
 WLED_GLOBAL bool apActive _INIT(false);
