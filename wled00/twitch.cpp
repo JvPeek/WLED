@@ -15,8 +15,6 @@ const String botName = "STREAMELEMENTS";
 #define eventNum        6
 const uint8_t eventTime[] = {10, 10, 10, 30, 20, 20};
 
-  
-  //"Monaten dabei und immer noch nicht gelangweilt.",
 
 
 
@@ -109,7 +107,7 @@ void handleTwitch() {
       // Second param is not needed by Twtich
       if (client.connect(TWITCH_BOT_NAME, "", TWITCH_OAUTH_TOKEN)) {
         client.sendRaw("JOIN " + ircChannel);
-        sendTwitchMessage(" / me WLED ready to do WLED things");
+        sendTwitchMessage("/me WLED ready to do WLED things");
       } else {
 
       }
@@ -135,6 +133,10 @@ void initTwitch() {
   strcpy(eventMessage[2], "Mitten auf den");
   strcpy(eventMessage[3], "jetzt den Laden hier");
   strcpy(eventMessage[4], "EINER VON UNS! EINER VON UNS!");
+  strcpy(eventMessage[5], "Monaten dabei und immer noch nicht gelangweilt.");
+
+
+ 
   
 }
 

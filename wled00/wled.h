@@ -342,7 +342,7 @@ WLED_GLOBAL uint16_t userVar0 _INIT(0), userVar1 _INIT(0); //available for use i
 #endif
 
 #ifdef WLED_ENABLE_TWITCH
-  WLED_GLOBAL char eventMessage[5][32] _INIT_N(({ "1", "2", "3", "4", "5" }));
+  WLED_GLOBAL char eventMessage[15][32] _INIT_N(({ "","","","","","","","","","","","","","","" }));
   //TODO: Add all the twitch variables
   //WLED_GLOBAL String
 
