@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta name="viewport" content="width=500"><meta charset="utf-8"><title>Twitch Settings</title>
 <script>
+let CBs=["ANY","BOT","YOU","MOD","VIP","SUB"];
+function dec2bin(dec) {
+  return (dec >>> 0).toString(2);
+}
+function CF(num) {
+  let val="000000" + dec2bin(d.getElementsByName("FLG"+num)[0].value);
+  console.log("calculating flag",val);
+
+  for (i=0;i<6;i++) {
+    let thisval="off";
+    if (val.substr(-i-1,1)=="1") { thisval="on"; }
+    console.log(CBs[i]+num,d.getElementsByName(CBs[i]+num)[0].value,thisval);
+    d.getElementsByName(CBs[i]+num)[0].checked = (val.substr(-1-i,1)=="1");
+
+  }
+}
 function GEV(num) {
   d=document;
   let output = "<h3>Events</h3><table><input type=\"hidden\" name=\"EVN\" value=\"" + num + "\" />";
 
   output += "<tr><th></th><th>Message</th><th>Macro</th><th>any</th><th>bot</th><th>you</th><th>mods</th><th>vips</th><th>subs</th><th>Time</th></tr>";
   for (i=0;i<num;i++) {
-    output += "<tr><td><input type=\"checkbox\" name=\"EN" + (i+1) + "\" /></td>";
+    output += "<tr><td><input type=\"text\" name=\"FLG" + (i+1) + "\" onchange=\"CF(" + (i+1) + ")\"/><input type=\"checkbox\" name=\"EN" + (i+1) + "\" /></td>";
     output += "<td><input type=\"text\" placeholder=\"Hello!\" size=10 name=\"MSG" + (i+1) + "\"/></td>";
     output += "<td><input type=\"text\" placeholder=\"&PL=" + (i+1) + "\" size=10 name=\"M" + (i+1) + "\"/></td>";
-    output += "<td><input type=\"checkbox\" name=\"ANY" + (i+1) + "\" /></td>";
-    output += "<td><input type=\"checkbox\" name=\"BOT" + (i+1) + "\" /></td>";
-    output += "<td><input type=\"checkbox\" name=\"USR" + (i+1) + "\" /></td>";
-    output += "<td><input type=\"checkbox\" name=\"MOD" + (i+1) + "\" /></td>";
-    output += "<td><input type=\"checkbox\" name=\"VIP" + (i+1) + "\" /></td>";
-    output += "<td><input type=\"checkbox\" name=\"SUB" + (i+1) + "\" /></td>";
+    for (j=0;j<6;j++) {
+      output += "<td><input type=\"checkbox\" name=\""+ CBs[j] + (i+1) + "\" /></td>";
+
+    }
     output += "<td><input style=\"text-align: center;\" type=\"text\" placeholder=\"10\" size=1 name=\"TM" + (i+1) + "\"/> s</td></tr>";
   }
   output += "</table>";
@@ -36,7 +50,7 @@ function BNList(num) {
   d.getElementById('Nlist').innerHTML = output;
 }
 
-function S(){GEV(15);BNList(10);GetV();}function H(){window.open("https://github.com/Aircoookie/WLED/wiki/Twitch");}function B(){window.history.back();}
+function S(){GEV(15);BNList(20);GetV();}function H(){window.open("https://github.com/Aircoookie/WLED/wiki/Twitch");}function B(){window.history.back();}
 function GetV(){}
 </script>
 %CSS%%SCSS%
@@ -119,18 +133,18 @@ function GetV(){}
     </tr>
     <tr>
       <td>Color 1:</td>
-      <td><input type="color" name="A2FR" /></td>
-      <td><input type="color" name="A2TO" /></td>
+      <td><input type="color" name="AL1" /></td>
+      <td><input type="color" name="AH1" /></td>
     </tr>
     <tr>
       <td>Color 2:</td>
-      <td><input type="color" name="A2FR" /></td>
-      <td><input type="color" name="A2TO" /></td>
+      <td><input type="color" name="AL2" /></td>
+      <td><input type="color" name="AH2" /></td>
     </tr>
     <tr>
       <td>Color 3:</td>
-      <td><input type="color" name="A3FR" /></td>
-      <td><input type="color" name="A3TO" /></td>
+      <td><input type="color" name="AL3" /></td>
+      <td><input type="color" name="AH3" /></td>
     </tr>
     <tr>
       <td>Get current:</td>

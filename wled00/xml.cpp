@@ -134,21 +134,21 @@ void sappend(char stype, const char* key, int val)
       oappend(key);
       oappend(".checked=");
       oappendi(val);
-      oappend(";");
+      oappend(";\n");
       break;
     case 'v': //numeric
       oappend(ds);
       oappend(key);
       oappend(".value=");
       oappendi(val);
-      oappend(";");
+      oappend(";\n");
       break;
     case 'i': //selectedIndex
       oappend(ds);
       oappend(key);
       oappend(SET_F(".selectedIndex="));
       oappendi(val);
-      oappend(";");
+      oappend(";\n");
       break;
   }
 }
@@ -465,13 +465,55 @@ void getSettingsJS(byte subPage, char* dest)
   if (subPage == 8)
   {
     //TODO: output variables for twitch support. for realsies
+    sappends('s',SET_F("CN"),eventMessage[0]);    // channel name
+    sappends('s',SET_F("CU"),eventMessage[0]);    // channel username
+    sappends('s',SET_F("CB"),eventMessage[0]);    // bot name
+    sappends('s',SET_F("CO"),eventMessage[0]);    // OAuth Token
+    sappend('v',SET_F("CD"),10);   // default preset
+
+    int i=0;
+    sappend('v',SET_F("FLG1"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("TM1"),10);   // time
+    sappends('s',SET_F("MSG1"),eventMessage[i]);
+    sappends('s',SET_F("M1"),eventMessage[i++]);
+
+    sappend('v',SET_F("FLG2"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("TM2"),10);   // time
+    sappends('s',SET_F("MSG2"),eventMessage[i]);
+    sappends('s',SET_F("M2"),eventMessage[i++]);
+
+    sappend('v',SET_F("FLG3"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("TM3"),10);   // time
+    sappends('s',SET_F("MSG3"),eventMessage[i]);
+    sappends('s',SET_F("M3"),eventMessage[i++]);
+
+    sappend('v',SET_F("FLG4"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("TM4"),10);   // time
+    sappends('s',SET_F("MSG4"),eventMessage[i]);
+    sappends('s',SET_F("M4"),eventMessage[i++]);
+
+    sappend('v',SET_F("FLG5"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("TM5"),10);   // time
+    sappends('s',SET_F("MSG5"),eventMessage[i]);
+    sappends('s',SET_F("M5"),eventMessage[i++]);
+
+    sappend('v',SET_F("FLG6"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("TM6"),10);   // time
+    sappends('s',SET_F("MSG6"),eventMessage[i]);
+    sappends('s',SET_F("M6"),eventMessage[i++]);
     
-    sappends('s',SET_F("MSG1"),eventMessage[0]);
-    sappends('s',SET_F("MSG2"),eventMessage[1]);
-    sappends('s',SET_F("MSG3"),eventMessage[2]);
-    sappends('s',SET_F("MSG4"),eventMessage[3]);
-    sappends('s',SET_F("MSG5"),eventMessage[4]);
+    sappend('v',SET_F("AL"),2);   // low activity value
+    sappend('v',SET_F("AH"),60);  // high activity value
+
+    sappends('s',SET_F("AL1"),"#FF00FF");
+    sappends('s',SET_F("AH1"),"#FF00FF");
+    sappends('s',SET_F("AL2"),"#FF00FF");
+    sappends('s',SET_F("AH2"),"#FF00FF");
+    sappends('s',SET_F("AL3"),"#FF00FF");
+    sappends('s',SET_F("AH3"),"#FF00FF");
     
+    
+
   }
   #endif
   oappend(SET_F("}</script>"));
