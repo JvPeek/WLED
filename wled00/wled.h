@@ -343,6 +343,10 @@ WLED_GLOBAL uint16_t userVar0 _INIT(0), userVar1 _INIT(0); //available for use i
 
 #ifdef WLED_ENABLE_TWITCH
   WLED_GLOBAL char eventMessage[15][32] _INIT_N(({ "","","","","","","","","","","","","","","" }));
+  WLED_GLOBAL char userNames[20][26]_INIT_N(({ "","","","","","","","","","","","","","","","","","","","" }));
+  WLED_GLOBAL byte twitchNametagLEDs[20] _INIT_N(({ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  }));
+
+  WLED_GLOBAL uint8_t twitchUserSegmentsSize _INIT(9);
   //TODO: Add all the twitch variables
   //WLED_GLOBAL String
 

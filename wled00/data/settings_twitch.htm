@@ -14,7 +14,6 @@ function CF(num) {
     if (val.substr(-i-1,1)=="1") { thisval="on"; }
     console.log(CBs[i]+num,d.getElementsByName(CBs[i]+num)[0].value,thisval);
     d.getElementsByName(CBs[i]+num)[0].checked = (val.substr(-1-i,1)=="1");
-
   }
 }
 function GEV(num) {
@@ -28,7 +27,6 @@ function GEV(num) {
     output += "<td><input type=\"text\" placeholder=\"&PL=" + (i+1) + "\" size=10 name=\"M" + (i+1) + "\"/></td>";
     for (j=0;j<6;j++) {
       output += "<td><input type=\"checkbox\" name=\""+ CBs[j] + (i+1) + "\" /></td>";
-
     }
     output += "<td><input style=\"text-align: center;\" type=\"text\" placeholder=\"10\" size=1 name=\"TM" + (i+1) + "\"/> s</td></tr>";
   }
@@ -44,13 +42,19 @@ function BNList(num) {
     output += "<tr><td>" + (i+1) + "</td>";
     output += "<td><input type=\"text\" size=25 maxlength=25 name=\"USR" + (i+1) + "\"/></td>";
 
-    output += "<td>" + ((i*Nnum)+1) + " - " + ((i+1)*Nnum) + "</td>";
-    output += "</tr>"
+    output += "<td><input type=\"text\" size=2 maxvalue=255 name=\"LEDR" + (i+1) + "\"/></td>";
+    output += "</tr>";
   }
   d.getElementById('Nlist').innerHTML = output;
 }
+function LEDR(num) {
+//  " + ((i*Nnum)+1) + " - " + ((i+1)*Nnum) + "
+  for (i=0;i<num;i++) {
+    d.Sf["TM1"].value=10;
+  }
+}
 
-function S(){GEV(15);BNList(20);GetV();}function H(){window.open("https://github.com/Aircoookie/WLED/wiki/Twitch");}function B(){window.history.back();}
+function S(){GEV(15);BNList(20);GetV();LEDR(20);}function H(){window.open("https://github.com/Aircoookie/WLED/wiki/Twitch");}function B(){window.history.back();}
 function GetV(){}
 </script>
 %CSS%%SCSS%
@@ -85,12 +89,16 @@ function GetV(){}
       <td><input name="CN" id="CN" type="text"></td>
     </tr>
     <tr>
-      <td><label for="CU">Your name: </label></td>
-      <td><input name="CU" id="CU" type="text"></td>
+      <td><label for="CY">YOU: </label></td>
+      <td><input name="CY" id="CY" type="text"></td>
     </tr>
     <tr>
-      <td><label for="CB">Alert name: </label></td>
+      <td><label for="CB">BOT name: </label></td>
       <td><input name="CB" id="CB" type="text" placeholder="i. e. Streamelements"></td>
+    </tr>
+    <tr>
+      <td><label for="CU">Login User: </label></td>
+      <td><input name="CU" id="CU" type="text"></td>
     </tr>
     <tr>
       <td><label for="CO">OAuth Token: </label></td>
@@ -162,7 +170,7 @@ function GetV(){}
   <table>
     <tr>
       <td><label for="NL">LEDs per user</label></td>
-      <td><input name="NL" id="NL" type="number" value="9" size=1></td>
+      <td><input name="NL" id="NL" type="number" size=1></td>
     </tr>
     <tr>
       <td><label for="NN">Number of users</label></td>

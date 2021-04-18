@@ -366,7 +366,7 @@ void serveSettings(AsyncWebServerRequest* request, bool post)
     else if (url.indexOf("dmx")  > 0) subPage = 7;
     #endif
     #ifdef WLED_ENABLE_TWITCH // include only if Twitch is enabled
-    else if (url.indexOf("twitch")  > 0) subPage = 8;
+    else if (url.indexOf("twitch") > 0) subPage = 8;
     #endif
   } else subPage = 255; //welcome page
 

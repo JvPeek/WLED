@@ -121,6 +121,8 @@ void _overlayAnalogCountdown()
 
 
 void handleOverlayDraw() {
+  
+  twitchBeforeDraw();
   if (!overlayCurrent) return;
   switch (overlayCurrent)
   {

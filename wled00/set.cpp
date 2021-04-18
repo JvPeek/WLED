@@ -31,8 +31,8 @@ bool isAsterisksOnly(const char* str, byte maxLen)
 void handleSettingsSet(AsyncWebServerRequest *request, byte subPage)
 {
 
-  //0: menu 1: wifi 2: leds 3: ui 4: sync 5: time 6: sec 7: DMX
-  if (subPage <1 || subPage >7) return;
+  //0: menu 1: wifi 2: leds 3: ui 4: sync 5: time 6: sec 7: DMX 8: Twitch
+  if (subPage <1 || subPage >8) return;
 
   //WIFI SETTINGS
   if (subPage == 1)
@@ -326,6 +326,21 @@ void handleSettingsSet(AsyncWebServerRequest *request, byte subPage)
       String argname = "CH" + String((i+1));
       t = request->arg(argname).toInt();
       DMXFixtureMap[i] = t;
+    }
+  }
+  
+  #endif
+  Serial.print("Subpage ist schon ");
+  Serial.print(subPage);
+  Serial.println(" Jahre alt!");
+  #ifdef WLED_ENABLE_TWITCH // include only if Twitch is enabled
+  if (subPage == 8)
+  {
+    for (int i=0; i<15; i++) {
+      // TODO: nächstes mal ausschlafen
+      strlcpy(userNames[i], request->arg("USR" + String(i+1)).c_str(), 26);
+      Serial.println(request->arg("USR" + String(i+1)).c_str());
+
     }
   }
   

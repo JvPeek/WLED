@@ -9,7 +9,7 @@
 // TODO: MOVE TO CONFIG FILE!!11!1111one
 
 
-const String botName = "STREAMELEMENTS";
+const String botName = "streamelements";
 
 #define defaultPreset   16
 #define eventNum        6
@@ -22,15 +22,13 @@ uint8_t twitchNamewallTimeout = 15;
 uint8_t normalBrightness = 0;
 uint8_t highlightBrightness = 255;
 
-const uint8_t names = 2;
-String userNames[names] = {
-  "JVPEEK",
-  "LUIGIPLAYERTWO"
-};
+const uint8_t names = 20;
+
 
 // local variables, do not eat
 long alertTimeout = -1;
-long lastSeen[names] = {1000, 1000};
+
+long lastSeen[names];
 
 #define IRC_SERVER   "irc.chat.twitch.tv"
 #define IRC_PORT     6667
@@ -57,13 +55,12 @@ float twitchGetMulti(uint8_t index) {
 
   return (float)multiplier / 255.0;
 }
-
-void twitchBeforeDraw() {
+void calculateUserSegments() {
+  
   for (int userNum = 0; userNum < names; userNum++) {
     float multiplier = twitchGetMulti(userNum);
-
-    for (int i = userNum * 9; i < (userNum * 9) + 9; i++) {
-      uint32_t in = strip.getPixelColor(i); // time to get the colors for the individual fixtures as suggested by AirCoookie at issue #462
+    for (int i = userNum * twitchUserSegmentsSize; i < (userNum * twitchUserSegmentsSize) + twitchUserSegmentsSize; i++) {
+      uint32_t in = strip.getPixelColor(i); 
       byte w = in >> 24 & 0xFF;
       byte r = in >> 16 & 0xFF;
       byte g = in >> 8  & 0xFF;
@@ -73,23 +70,28 @@ void twitchBeforeDraw() {
     }
   }
 }
+void twitchBeforeDraw() {
+  calculateUserSegments();
+}
 void twitchCallback(IRCMessage ircMessage) {
   if (ircMessage.command == "PRIVMSG" && ircMessage.text[0] != '\001') {
     String username = ircMessage.nick;
-    username.toUpperCase();
-    for (int i = 0; i < names; i++) {
-      if (userNames[i] == username) {
+    username.toLowerCase();
+    char buf[26];
+    username.toCharArray(buf, 25);
 
+    for (int i = 0; i < names; i++) {
+      if (strcmp(buf, userNames[i]) == 0) { // danke, lukfor85 und GyrosGeier
         lastSeen[i] = millis();
       }
     }
 
-    if (ircMessage.text == "!syscheck" && username == "JVPEEK") {
-      sendTwitchMessage("/me Userwall is ready");
+    if (ircMessage.text == "!syscheck" && username == "jvpeek") {
+      sendTwitchMessage("/me Der Benutzerwall ist bereit");
 
     }
     for (int i = 0; i < eventNum; i++) {
-      if (ircMessage.text.indexOf(eventMessage[i]) > -1 && ((username == botName) || (username == "JVPEEK"))) {
+      if (ircMessage.text.indexOf(eventMessage[i]) > -1 && ((username == botName) || (username == "jvpeek"))) {
         applyPreset(i + 1);
         colorUpdated(NOTIFIER_CALL_MODE_PRESET_CYCLE);
         alertTimeout = millis() + (eventTime[i] * 1000);
@@ -134,9 +136,13 @@ void initTwitch() {
   strcpy(eventMessage[3], "jetzt den Laden hier");
   strcpy(eventMessage[4], "EINER VON UNS! EINER VON UNS!");
   strcpy(eventMessage[5], "Monaten dabei und immer noch nicht gelangweilt.");
-
-
- 
+  strcpy(userNames[0], "jvpeek");
+  strcpy(userNames[1], "crazymodding");
+  strcpy(userNames[2], "simmarith");
+  strcpy(userNames[3], "sokar_x");
+  for (int i=0;i<20;i++) {
+    twitchNametagLEDs[i]=i;
+  }
   
 }
 

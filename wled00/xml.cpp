@@ -472,32 +472,32 @@ void getSettingsJS(byte subPage, char* dest)
     sappend('v',SET_F("CD"),10);   // default preset
 
     int i=0;
-    sappend('v',SET_F("FLG1"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("FLG1"),1);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
     sappend('v',SET_F("TM1"),10);   // time
     sappends('s',SET_F("MSG1"),eventMessage[i]);
     sappends('s',SET_F("M1"),eventMessage[i++]);
 
-    sappend('v',SET_F("FLG2"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("FLG2"),2);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
     sappend('v',SET_F("TM2"),10);   // time
     sappends('s',SET_F("MSG2"),eventMessage[i]);
     sappends('s',SET_F("M2"),eventMessage[i++]);
 
-    sappend('v',SET_F("FLG3"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("FLG3"),4);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
     sappend('v',SET_F("TM3"),10);   // time
     sappends('s',SET_F("MSG3"),eventMessage[i]);
     sappends('s',SET_F("M3"),eventMessage[i++]);
 
-    sappend('v',SET_F("FLG4"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("FLG4"),8);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
     sappend('v',SET_F("TM4"),10);   // time
     sappends('s',SET_F("MSG4"),eventMessage[i]);
     sappends('s',SET_F("M4"),eventMessage[i++]);
 
-    sappend('v',SET_F("FLG5"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("FLG5"),16);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
     sappend('v',SET_F("TM5"),10);   // time
     sappends('s',SET_F("MSG5"),eventMessage[i]);
     sappends('s',SET_F("M5"),eventMessage[i++]);
 
-    sappend('v',SET_F("FLG6"),63);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
+    sappend('v',SET_F("FLG6"),32);  // 32 ANY, 16 BOT, 8 YOU, 4 MOD, 2 VIP, 1 SUB 
     sappend('v',SET_F("TM6"),10);   // time
     sappends('s',SET_F("MSG6"),eventMessage[i]);
     sappends('s',SET_F("M6"),eventMessage[i++]);
@@ -511,8 +511,24 @@ void getSettingsJS(byte subPage, char* dest)
     sappends('s',SET_F("AH2"),"#FF00FF");
     sappends('s',SET_F("AL3"),"#FF00FF");
     sappends('s',SET_F("AH3"),"#FF00FF");
-    
-    
+
+    for (int i = 0; i<20;i++) {
+      String keynameStr = "USR";
+      keynameStr += String(i+1);
+      char keyname[keynameStr.length()+1];
+      strcpy(keyname, keynameStr.c_str());
+      sappends('s',keyname,userNames[i]);
+    }
+    for (int i = 0; i<20;i++) {
+      String keynameStr = "LEDR";
+      keynameStr += String(i+1);
+      char keyname[keynameStr.length()+1];
+      strcpy(keyname, keynameStr.c_str());
+      sappend('v',keyname,i);
+    }
+
+    sappend('v',SET_F("NL"),twitchUserSegmentsSize);
+
 
   }
   #endif
